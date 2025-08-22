@@ -1,8 +1,10 @@
+import { redirect } from "react-router";
 import { clearToken, getToken, isExpired } from "../helpers/tokenHelpers";
 
 export async function api(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    returnRaw = false
 ): Promise<any> {
     let token = getToken();
 
@@ -21,8 +23,16 @@ export async function api(
         },
     });
     if (!res.ok) {
+        if (res.status === 401) {
+            clearToken();
+            console.log("REDIRECTG works!");
+            redirect("/login");
+        }
+        throw new Error(`API error: ${res.status}`);
+    }
+    if (!res.ok && !returnRaw) {
         throw new Error(`API error: ${res.status}`);
     }
 
-    return res.json();
+    return returnRaw ? res : res.json();
 }
