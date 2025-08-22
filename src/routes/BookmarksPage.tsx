@@ -4,6 +4,7 @@ import { useQueryBookmarks } from "../hooks/useQueryBookmarks";
 import { QUERY_KEYS, URL } from "../constants";
 import { useDeleteBookmark } from "../hooks/useDeleteBookmark";
 import { useQueryClient } from "@tanstack/react-query";
+import { AnimateItemWrapper } from "../components/AnimateItemWrapper";
 
 export default function Bookmarks() {
     const { bookmarks, isPending, error } = useQueryBookmarks();
@@ -40,17 +41,19 @@ export default function Bookmarks() {
         <section className="flex flex-col">
             <h1 className="text-4xl text-center">Bookmarks page</h1>
             <ul className="text-center my-4 text-4xl">
-                {bookmarks.map((bookmark) => (
-                    <li key={bookmark.id}>
-                        <h3>{bookmark.title}</h3>
-                        <button
-                            onClick={() => removeBookmark(bookmark.id)}
-                            className="bg-red-600 text-xl p-2 rounded-md cursor-pointer"
-                        >
-                            Remove
-                        </button>
-                    </li>
-                ))}
+                <AnimateItemWrapper>
+                    {bookmarks.map((bookmark) => (
+                        <li key={bookmark.id}>
+                            <h3>{bookmark.title}</h3>
+                            <button
+                                onClick={() => removeBookmark(bookmark.id)}
+                                className="bg-red-600 text-xl p-2 rounded-md cursor-pointer"
+                            >
+                                Remove
+                            </button>
+                        </li>
+                    ))}
+                </AnimateItemWrapper>
             </ul>
             <Link
                 to="/add"
