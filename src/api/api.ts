@@ -19,6 +19,7 @@ export async function api(
         headers: {
             "Content-Type": "application/json",
             ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            "Access-Control-Allow-Origin": import.meta.env.VITE_BACKEND_URL,
             ...(options.headers || {}),
         },
     });
