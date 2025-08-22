@@ -1,18 +1,13 @@
-import { type PropsWithChildren, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
+import { useLocalStorage } from "usehooks-ts";
+import { TOKEN_KEY } from "../constants";
+import { isExpired } from "../helpers/tokenHelpers";
 
-import { useAuth } from "./AuthProvider";
+export default function ProtectedRoute() {
+    const [accessToken] = useLocalStorage(TOKEN_KEY, "");
 
-type ProtectedRouteProps = PropsWithChildren;
-
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-    const user = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user === null) {
-            navigate("/signin", { replace: true });
-        }
-    }, [navigate, user]);
-    return children;
+    if (accessToken && !isExpired()) {
+        return <Outlet />;
+    }
+    return <Navigate to="/" replace />;
 }
