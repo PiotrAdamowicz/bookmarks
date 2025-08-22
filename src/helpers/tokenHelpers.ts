@@ -1,14 +1,14 @@
-import { TOKEN_EXPIRATION_KEY, TOKEN_KEY } from "../constants";
+import { LOCAL_STORAGE_KEYS } from "../constants";
 
 export function getToken() {
-    const token = localStorage.getItem(TOKEN_KEY);
+    const token = localStorage.getItem(LOCAL_STORAGE_KEYS.token);
     if (!token) return;
 
     return JSON.parse(token);
 }
 
 export function getExpiresAt(): number {
-    const expiresAt = localStorage.getItem(TOKEN_EXPIRATION_KEY);
+    const expiresAt = localStorage.getItem(LOCAL_STORAGE_KEYS.expiration);
     if (!expiresAt) return 0;
     try {
         const parsed = JSON.parse(expiresAt);
@@ -32,6 +32,6 @@ export function isExpired(): boolean {
 }
 
 export function clearToken() {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(TOKEN_EXPIRATION_KEY);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.token);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.expiration);
 }

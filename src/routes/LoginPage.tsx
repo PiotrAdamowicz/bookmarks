@@ -2,15 +2,16 @@ import { useEffect, type FormEvent } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router";
 import { useLocalStorage } from "usehooks-ts";
-import { TOKEN_KEY } from "../constants";
+import { LOCAL_STORAGE_KEYS } from "../constants";
+import { isExpired } from "../helpers/tokenHelpers";
 
 export const Login = () => {
-    const [accessToken] = useLocalStorage(TOKEN_KEY, "");
+    const [accessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.token, "");
     const navigate = useNavigate();
     const login = useLogin();
 
     useEffect(() => {
-        if (accessToken) navigate("/bookmarks");
+        if (accessToken && !isExpired()) navigate("/bookmarks");
     }, []);
 
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {

@@ -2,12 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocalStorage } from "usehooks-ts";
 import { addTime } from "../helpers/addTime";
 import { api } from "../api/api";
-import {
-    TOKEN_EXPIRATION,
-    TOKEN_EXPIRATION_KEY,
-    TOKEN_KEY,
-    URL,
-} from "../constants";
+import { LOCAL_STORAGE_KEYS, TOKEN_EXPIRATION, URL } from "../constants";
 
 type LoginPayload = {
     email: string;
@@ -19,8 +14,11 @@ type LoginResponse = {
 };
 
 export function useLogin() {
-    const [_, setAccessToken] = useLocalStorage(TOKEN_KEY, "");
-    const [__, setExpiration] = useLocalStorage(TOKEN_EXPIRATION_KEY, "");
+    const [_, setAccessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.token, "");
+    const [__, setExpiration] = useLocalStorage(
+        LOCAL_STORAGE_KEYS.expiration,
+        ""
+    );
     const queryClient = useQueryClient();
 
     return useMutation<LoginResponse, Error, LoginPayload>({
