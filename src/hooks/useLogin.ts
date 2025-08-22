@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useLocalStorage } from "usehooks-ts";
 import { addTime } from "../helpers/addTime";
 import { api } from "../api/api";
@@ -19,7 +19,6 @@ export function useLogin() {
         LOCAL_STORAGE_KEYS.expiration,
         ""
     );
-    const queryClient = useQueryClient();
 
     return useMutation<LoginResponse, Error, LoginPayload>({
         mutationFn: async (credentials: LoginPayload) => {
@@ -40,10 +39,6 @@ export function useLogin() {
                     : String(expiration)
             );
             return res;
-        },
-        onSuccess: () => {
-            // Re-fetch auth state so ProtectedRoute sees updated user
-            queryClient.invalidateQueries({ queryKey: ["me"] });
         },
     });
 }

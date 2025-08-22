@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api/api";
-import { URL } from "../constants";
+import { QUERY_KEYS, URL } from "../constants";
 import type { Bookmark } from "../types";
 
 export function useQueryBookmarks(): {
@@ -13,7 +13,7 @@ export function useQueryBookmarks(): {
         isPending,
         error,
     } = useQuery({
-        queryKey: ["bookmarks"],
+        queryKey: [QUERY_KEYS.bookmarks],
         queryFn: () => api(URL.bookmarks),
     });
 

@@ -10,3 +10,9 @@ export type Bookmark = {
     userId: number;
     user: any;
 };
+
+export type UrlProps = {
+    home: string;
+    login: string;
+    bookmarks: string;
+};
