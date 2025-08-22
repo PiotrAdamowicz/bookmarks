@@ -13,7 +13,7 @@ export default function Bookmarks() {
     };
 
     if (error) {
-        return <p>Error</p>;
+        return <p className="text-red-600">Authentication expired</p>;
     }
     if (isPending) {
         return <p>Loading...</p>;
@@ -23,6 +23,7 @@ export default function Bookmarks() {
     }
     return (
         <>
+            <h1 className="text-4xl text-center">Bookmarks page</h1>
             <ul className="text-center my-4 text-4xl">
                 {bookmarks.map((bookmark) => (
                     <li key={bookmark.id}>{bookmark.title}</li>

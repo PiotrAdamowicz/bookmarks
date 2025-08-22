@@ -7,7 +7,7 @@ export const URL: UrlProps = {
     login: "auth/login",
     bookmarks: "bookmarks",
 };
-export const TOKEN_EXPIRATION: AddTimeProps = { amount: 1, unit: "minutes" };
+export const TOKEN_EXPIRATION: AddTimeProps = { amount: 15, unit: "minutes" };
 
 export type UrlProps = {
     home: string;
